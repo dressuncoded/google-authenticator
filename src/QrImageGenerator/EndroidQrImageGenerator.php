@@ -7,6 +7,7 @@ use Endroid\QrCode\QrCode;
 
 class EndroidQrImageGenerator implements QrImageGeneratorInterface
 {
+    protected static $endroidWriterNames = ['binary', 'debug', 'eps', 'png', 'svg', 'fpdf'];
     protected $size;
     protected $writer;
 
@@ -14,6 +15,10 @@ class EndroidQrImageGenerator implements QrImageGeneratorInterface
     {
         if (!is_numeric($size)) {
             throw new \InvalidArgumentException("Size is required to be numeric");
+        }
+
+        if (!in_array($writer, self::$endroidWriterNames)) {
+            throw new \InvalidArgumentException($writer . "is not a valid Endroid writer.");
         }
 
         $this->size = $size;
